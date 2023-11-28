@@ -24,12 +24,7 @@ class UserAuthController extends Controller
             'password'=> 'required|min:5|max:255|confirmed',
         ]);
        
-        // $data = new User;
-        // $data->name = $request->name;
-        // $data->email = $request->email;
-        // $data->role = 'student';
-        // $data->password = Hash::make($request->password);
-        // $data->save();
+       
         $validate['password'] = Hash::make($validate['password']);
         $data = User::create([
             "name" => $validate["name"],
@@ -38,10 +33,7 @@ class UserAuthController extends Controller
             "password" => $validate["password"]
         ]);
 
-        // $data_student = array(
-        //     'user_id' => $data->id,
-        //     'class' => strtoupper($request->class),     
-        // );
+        
         Student::create([
             'user_id' => $data->id,
             'class' => strtoupper($request->class),

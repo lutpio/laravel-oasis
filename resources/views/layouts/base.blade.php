@@ -11,11 +11,28 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     {{-- font --}}
+
+    {{-- sweetalert --}}
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="sweetalert2.all.min.js"></script>
+    <script src="sweetalert2.min.js"></script>
+    <link rel="stylesheet" href="sweetalert2.min.css">
+    {{-- sweetalert --}}
     <link rel="stylesheet" href="/css/style.css">
     @vite(['resources/js/app.js'])
 </head>
 
 <body>
+    @if (session()->has('error'))
+        <script>
+            Swal.fire({
+                title: "{{ session('error') }}",
+                icon: 'error',
+                showConfirmButton: false,
+                timer: 2000
+            })
+        </script>
+    @endif
     <nav class="navbar navbar-expand-lg bg-body-tertiary  ">
         <div class="container">
             <a class="navbar-brand" href="#">Navbar</a>
@@ -61,7 +78,7 @@
     <main class="bg-body">@yield('container')</main>
 
     <!-- Login modal -->
-    <div id="login-modal" class="modal fade " tabindex="-1" role="dialog" aria-hidden="true">
+    <div id="login-modal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content border-0">
                 <div class="modal-body">
@@ -69,19 +86,21 @@
                         <h3 class="fw-semibold text-primary">Login</h3>
                     </div>
 
-                    <form action="#" class="ps-3 pe-3">
+                    <form action="/login" class="ps-3 pe-3" method="POST">
+                        @csrf
                         <div class="mb-3">
                             <label for="email" class="form-label">Email </label>
-                            <input class="form-control" type="email" id="email" placeholder="john@deo.com">
+                            <input class="form-control" type="email" name="email" id="email"
+                                placeholder="john@deo.com">
                         </div>
 
                         <div class="mb-3">
                             <label for="password" class="form-label">Password</label>
-                            <input class="form-control" type="password" id="password"
-                                placeholder="Enter your password">
+                            <input class="form-control" name="password" type="password" id="password"
+                                placeholder="••••••••">
                         </div>
 
-                        <div class="my-3 d-flex justify-content-between align-items-center">
+                        <div class="mt-5 mb-3 d-flex justify-content-between align-items-center">
                             <div>
                                 <a href="/register">Daftar Akun</a>
                             </div>
